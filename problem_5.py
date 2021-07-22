@@ -30,6 +30,10 @@ class Trie:
 
     def insert(self, word):
         """Add a word to the Trie"""
+        if word is None:
+            raise ValueError('word cannot be None')
+        if len(word) == 0:
+            raise ValueError('word cannot be empty')
         current_node = self.root
         for char in word:
             current_node.insert(char)
@@ -65,6 +69,16 @@ class TrieTestCase(unittest.TestCase):
         self.assertIsNotNone(prefix_node)
         self.assertListEqual(output_list, prefix_node.suffixes(""))
         print('\n'.join(prefix_node.suffixes()))
+
+    def test_none_insert_raises_value_error(self):
+        trie = Trie()
+        with self.assertRaises(ValueError):
+            trie.insert(None)
+
+    def test_empty_input_list_raises_value_error(self):
+        trie = Trie()
+        with self.assertRaises(ValueError):
+            trie.insert([])
 
 
 if __name__ == '__main__':

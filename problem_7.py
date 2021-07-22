@@ -57,6 +57,10 @@ class Router:
         You will need to split the path and pass the pass parts
         as a list to the RouteTrie
         """
+        if full_path is None:
+            raise ValueError('full_path cannot be None')
+        if len(full_path) == 0:
+            raise ValueError('full_path cannot be empty')
         paths = self.split_path(full_path)
         self.route_trie.insert(paths, handler=handler)
 
@@ -128,6 +132,16 @@ class RouterTestCase(unittest.TestCase):
         router = Router(root_handler, not_found_handler)
         router.add_handler("/home/about", about_handler)
         self.assertEqual(not_found_handler, router.lookup("/home/about/me"))
+
+    def test_none_insert_raises_value_error(self):
+        router = Router(None, None)
+        with self.assertRaises(ValueError):
+            router.add_handler(None, None)
+
+    def test_empty_input_list_raises_value_error(self):
+        router = Router(None, None)
+        with self.assertRaises(ValueError):
+            router.add_handler('', None)
 
 
 if __name__ == '__main__':

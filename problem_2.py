@@ -1,4 +1,5 @@
 import unittest
+from typing import List
 
 
 def find_pivot(arr, start, end):
@@ -20,7 +21,7 @@ def find_pivot(arr, start, end):
     return find_pivot(arr, mid + 1, end)
 
 
-def rotated_array_search(input_list, number):
+def rotated_array_search(input_list: List, number: int):
     """
     Find the index by searching in a rotated sorted array
 
@@ -30,7 +31,11 @@ def rotated_array_search(input_list, number):
     Returns:
        int: Index or -1
     """
+    if input_list is None or number is None:
+        raise ValueError("neither input_list nor number can be None")
     n = len(input_list)
+    if n == 0:
+        return -1
     # first we need to find the pivot
     pivot = find_pivot(input_list, 0, n-1)
     if pivot == -1:
@@ -85,6 +90,14 @@ class RotatedArraySearchTestCase(unittest.TestCase):
     def test_valid_5(self):
         input_list, number = [[6, 7, 8, 1, 2, 3, 4], 10]
         self.assertEqual(linear_search(input_list, number), rotated_array_search(input_list, number))
+
+    def test_none_input_list_raises_value_error(self):
+        with self.assertRaises(ValueError):
+            rotated_array_search(None, 0)
+
+    def test_none_number_raises_value_error(self):
+        with self.assertRaises(ValueError):
+            rotated_array_search([], None)
 
 
 if __name__ == '__main__':

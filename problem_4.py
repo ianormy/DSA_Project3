@@ -9,6 +9,10 @@ def sort_012(input_list: List):
     Args:
        input_list(list): List to be sorted
     """
+    if input_list is None:
+        raise ValueError('input_list cannot be None')
+    if len(input_list) == 0:
+        raise ValueError('input_list cannot be empty')
     next_pos_0 = 0  # points to the place where we can put the next 0 we find
     next_pos_2 = len(input_list) - 1  # points to the place where we can put the next 2 we find
     front_index = 0
@@ -43,6 +47,14 @@ class Sort012TestCase(unittest.TestCase):
                                    [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2]]
         sort_012(input_list)
         self.assertListEqual(output_list, input_list)
+
+    def test_none_input_list_raises_value_error(self):
+        with self.assertRaises(ValueError):
+            sort_012(None)
+
+    def test_empty_input_list_raises_value_error(self):
+        with self.assertRaises(ValueError):
+            sort_012([])
 
 
 if __name__ == '__main__':

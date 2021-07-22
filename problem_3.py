@@ -58,6 +58,10 @@ def rearrange_digits(input_list: List) -> Tuple:
     Returns:
        (int),(int): Two maximum sums
     """
+    if input_list is None:
+        raise ValueError('input_list cannot be None')
+    if len(input_list) < 2:
+        raise ValueError('input_list must have at least 2 items')
     sorted_list = merge_sort_descending(input_list)
     ret1 = 0
     ret2 = 0
@@ -89,6 +93,18 @@ class RearrangeDigitsTestCase(unittest.TestCase):
     def test_valid_2(self):
         input_list, numbers = [[4, 6, 2, 5, 9, 8], [964, 852]]
         self.assertListEqual(numbers, list(rearrange_digits(input_list)))
+
+    def test_none_input_list_raises_value_error(self):
+        with self.assertRaises(ValueError):
+            rearrange_digits(None)
+
+    def test_empty_input_list_raises_value_error(self):
+        with self.assertRaises(ValueError):
+            rearrange_digits([])
+
+    def test_input_list_single_item_raises_value_error(self):
+        with self.assertRaises(ValueError):
+            rearrange_digits([1])
 
 
 if __name__ == '__main__':

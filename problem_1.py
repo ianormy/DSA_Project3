@@ -57,7 +57,7 @@ class SquareRootTestCase(unittest.TestCase):
 
     def test_none_raises_value_error(self):
         with self.assertRaises(ValueError):
-            sqrt(None)  # imaginary number
+            sqrt(None)
 
 
 if __name__ == '__main__':
